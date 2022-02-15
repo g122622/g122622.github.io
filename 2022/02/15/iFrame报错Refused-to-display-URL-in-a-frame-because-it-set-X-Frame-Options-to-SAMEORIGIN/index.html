@@ -4,9 +4,11 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="bootstrap组件导致背景变色问题, g122622的个人网站">
-    <meta name="description" content="我想借助bootstrap的accordion组件实现下图所示的效果但当我实现时却变成了下图的效果发现这个accordion组件会自带一个白背景，干扰颜色布局。就算给accordion的容器增加透明背景属性也无效。
-直到我在devtools">
+    <meta name="keywords" content="iFrame报错Refused to display URL in a frame because it set X-Frame-Options to SAMEORIGIN, g122622的个人网站">
+    <meta name="description" content="如果服务端不允许页面iframe嵌套，本地chromium会拦截iframe的load请求来阻止访问。
+
+结合经验，我想到了如下解决方法来强行绕过这个检测：
+我在初次研究ajax的时候发现了如果把xmlhttp指向任意一个非下载资源页面时，">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -18,7 +20,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>bootstrap组件导致背景变色问题 | g122622的个人网站</title>
+    <title>iFrame报错Refused to display URL in a frame because it set X-Frame-Options to SAMEORIGIN | g122622的个人网站</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -310,12 +312,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">bootstrap组件导致背景变色问题</h1>
+                    <h1 class="description center-align post-title">iFrame报错Refused to display URL in a frame because it set X-Frame-Options to SAMEORIGIN</h1>
                 </div>
             </div>
         </div>
@@ -468,10 +470,13 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>我想借助bootstrap的accordion组件实现下图所示的效果<br><img src="https://pic3.zhimg.com/80/v2-8672bd346874f6c1dd9402e884578dba_720w.jpg"><br>但当我实现时却变成了下图的效果<br><img src="https://pic3.zhimg.com/80/v2-01e9295d3c7193f2d1385fa683793a2e_720w.jpg"><br>发现这个accordion组件会自带一个白背景，干扰颜色布局。就算给accordion的容器增加透明背景属性也无效。</p>
-<p>直到我在devtools的css调试器中发现了这个：</p>
-<p><img src="https://pic2.zhimg.com/80/v2-3a35c5313416a679223d82a1cb424385_720w.jpeg"></p>
-<p>在root中将其覆盖即可。</p>
+                <p>如果服务端不允许页面iframe嵌套，本地chromium会拦截iframe的load请求来阻止访问。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-4bc2388a3d201830b926bd8a04d1bdb2_720w.png"></p>
+<p>结合经验，我想到了如下解决方法来强行绕过这个检测：</p>
+<p>我在初次研究ajax的时候发现了如果把xmlhttp指向任意一个非下载资源页面时，请求到的响应数据将是该页面的源代码。</p>
+<p>我们可以把获得的网页源码直接通过document.write写到页面里。</p>
+<p>利用这个feature，代码如下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> xmlhttp = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>();</span><br><span class="line">xmlhttp.<span class="property">onreadystatechange</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (xmlhttp.<span class="property">readyState</span> == <span class="number">4</span> &amp;&amp; xmlhttp.<span class="property">status</span> == <span class="number">200</span>) &#123;</span><br><span class="line">        <span class="variable language_">document</span>.<span class="title function_">write</span>(xmlhttp.<span class="property">responseText</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">xmlhttp.<span class="title function_">open</span>(<span class="string">&quot;GET&quot;</span>, <span class="string">&quot;https://mathsolver.microsoft.com/zh&quot;</span>, <span class="literal">true</span>);</span><br><span class="line">xmlhttp.<span class="title function_">send</span>();</span><br></pre></td></tr></table></figure>
 
                 
             </div>
@@ -498,7 +503,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2022/02/15/bootstrap%E7%BB%84%E4%BB%B6%E5%AF%BC%E8%87%B4%E8%83%8C%E6%99%AF%E5%8F%98%E8%89%B2%E9%97%AE%E9%A2%98/">http://example.com/2022/02/15/bootstrap%E7%BB%84%E4%BB%B6%E5%AF%BC%E8%87%B4%E8%83%8C%E6%99%AF%E5%8F%98%E8%89%B2%E9%97%AE%E9%A2%98/</a>
+                    <a href="http://example.com/2022/02/15/iFrame%E6%8A%A5%E9%94%99Refused-to-display-URL-in-a-frame-because-it-set-X-Frame-Options-to-SAMEORIGIN/">http://example.com/2022/02/15/iFrame%E6%8A%A5%E9%94%99Refused-to-display-URL-in-a-frame-because-it-set-X-Frame-Options-to-SAMEORIGIN/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -589,13 +594,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2022/02/15/%E5%8F%98%E5%88%86%E6%B3%95%E7%BB%83%E4%B9%A0%E9%A2%98%EF%BC%9A%E6%B1%82%E8%A7%A3%E6%97%8B%E8%BD%AC%E7%8A%B6%E6%80%81%E7%9A%84%E7%BB%B3%E5%AD%90%E6%96%B9%E7%A8%8B/">
+                <a href="/2022/02/15/Electron%E5%BA%94%E7%94%A8%E5%86%85%E4%B8%8B%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="变分法练习题：求解旋转状态的绳子方程">
+                        <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Electron应用内下载器实现">
                         
-                        <span class="card-title">变分法练习题：求解旋转状态的绳子方程</span>
+                        <span class="card-title">Electron应用内下载器实现</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -619,8 +624,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%89%A9%E7%90%86%E6%8E%A2%E7%A7%98/">
-                        <span class="chip bg-color">物理探秘</span>
+                    <a href="/tags/electron%E5%92%8Cweb%E5%BC%80%E5%8F%91/">
+                        <span class="chip bg-color">electron和web开发</span>
                     </a>
                     
                 </div>
@@ -634,13 +639,13 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/02/15/hello-world/">
+                <a href="/2022/02/15/electron-v14-%E5%BC%95%E5%85%A5remote%E6%88%90%E5%8A%9F%E4%BD%86%E4%BD%BF%E7%94%A8%E6%97%B6%E6%96%B9%E6%B3%95%E6%9C%AA%E5%AE%9A%E4%B9%89%E7%9A%84%E8%A7%A3%E5%86%B3/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="Hello World">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="electron v14+引入remote成功但使用时方法未定义的解决">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">electron v14+引入remote成功但使用时方法未定义的解决</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -660,6 +665,14 @@
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/electron%E5%92%8Cweb%E5%BC%80%E5%8F%91/">
+                        <span class="chip bg-color">electron和web开发</span>
+                    </a>
+                    
                 </div>
                 
             </div>

@@ -4,9 +4,12 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="bootstrap组件导致背景变色问题, g122622的个人网站">
-    <meta name="description" content="我想借助bootstrap的accordion组件实现下图所示的效果但当我实现时却变成了下图的效果发现这个accordion组件会自带一个白背景，干扰颜色布局。就算给accordion的容器增加透明背景属性也无效。
-直到我在devtools">
+    <meta name="keywords" content="Electron应用内下载器实现, g122622的个人网站">
+    <meta name="description" content="考虑到某些模块的正常运行离不开伪造http请求标头来欺骗服务器，以获取上面的某些敏感数据。
+准备做一个应用内的定制版下载管理器，来承接各个模块可能需要触发的下载任务。
+整个分支工程的框架大体如下：
+
+一、外置下载引擎的可行性论证与选择优秀的">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -18,7 +21,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>bootstrap组件导致背景变色问题 | g122622的个人网站</title>
+    <title>Electron应用内下载器实现 | g122622的个人网站</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -310,12 +313,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">bootstrap组件导致背景变色问题</h1>
+                    <h1 class="description center-align post-title">Electron应用内下载器实现</h1>
                 </div>
             </div>
         </div>
@@ -468,10 +471,33 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>我想借助bootstrap的accordion组件实现下图所示的效果<br><img src="https://pic3.zhimg.com/80/v2-8672bd346874f6c1dd9402e884578dba_720w.jpg"><br>但当我实现时却变成了下图的效果<br><img src="https://pic3.zhimg.com/80/v2-01e9295d3c7193f2d1385fa683793a2e_720w.jpg"><br>发现这个accordion组件会自带一个白背景，干扰颜色布局。就算给accordion的容器增加透明背景属性也无效。</p>
-<p>直到我在devtools的css调试器中发现了这个：</p>
-<p><img src="https://pic2.zhimg.com/80/v2-3a35c5313416a679223d82a1cb424385_720w.jpeg"></p>
-<p>在root中将其覆盖即可。</p>
+                <p>考虑到某些模块的正常运行离不开伪造http请求标头来欺骗服务器，以获取上面的某些敏感数据。</p>
+<p>准备做一个应用内的定制版下载管理器，来承接各个模块可能需要触发的下载任务。</p>
+<p>整个分支工程的框架大体如下：</p>
+<p><img src="https://pic4.zhimg.com/80/v2-f5a291f0a81b281bf3d30c8dcd14a337_720w.jpg"></p>
+<h3 id="一、外置下载引擎的可行性论证与选择"><a href="#一、外置下载引擎的可行性论证与选择" class="headerlink" title="一、外置下载引擎的可行性论证与选择"></a>一、外置下载引擎的可行性论证与选择</h3><p>优秀的下载器motrix使用aria2作为其内核，支持断点续传和多进程下载。但因其技术文档难以寻找，我打算使用常见的request模块来下载文件。以后若有时间，我会把aria2也集成进去。</p>
+<h3 id="二、下载逻辑以及代码编写"><a href="#二、下载逻辑以及代码编写" class="headerlink" title="二、下载逻辑以及代码编写"></a>二、下载逻辑以及代码编写</h3><p>1.作为一个独立对象储存在.&#x2F;insert&#x2F;buildInDownloader</p>
+<p>2.文件树目录结构：</p>
+<p><img src="https://pic2.zhimg.com/80/v2-0da24e23ecf3360a34574559bba84311_720w.jpg"></p>
+<p>3.下载原理：</p>
+<ol>
+<li>创建写入流 fs.createWriteStream</li>
+<li>get方法请求文件 request.get(options)</li>
+<li>在request请求的回调函数中获取文件大小并设置length参数 length: response.headers[‘content-length’]</li>
+<li>设置好length参数之后再重新request请求文件（<strong>否则无法获取length参数，进度信息会有误</strong>）</li>
+<li><strong>将request请求到的文件流pipe进progress-stream的实例（proStream）中去监听文件下载进度</strong> request.get(options).pipe(proStream)及proStream.on(‘progress’, function(progress){…}）</li>
+<li>文件下载完成，触发文件的finish事件</li>
+</ol>
+<p>4.代码实现：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> request = <span class="built_in">require</span>(<span class="string">&#x27;request&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> progress = <span class="built_in">require</span>(<span class="string">&#x27;progress-stream&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">&quot;http&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> percentage = <span class="keyword">new</span> <span class="title class_">Map</span>();<span class="comment">//外部变量，定期更新，以供外部读取</span></span><br><span class="line"><span class="keyword">var</span> progress_stream_instance = <span class="keyword">new</span> <span class="title class_">Map</span>();</span><br><span class="line"><span class="keyword">var</span> file_write_stream = <span class="keyword">new</span> <span class="title class_">Map</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">//当请求的非文本文件时，一定要设置options.encoding : null</span></span><br><span class="line"><span class="comment">/*options:</span></span><br><span class="line"><span class="comment">--task_id,</span></span><br><span class="line"><span class="comment">--save_path,</span></span><br><span class="line"><span class="comment">--referer,</span></span><br><span class="line"><span class="comment">--url,</span></span><br><span class="line"><span class="comment">--encoding</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">download</span>(<span class="params">options</span>) &#123;</span><br><span class="line">    <span class="comment">//set map</span></span><br><span class="line">    file_write_stream.<span class="title function_">set</span>(options.<span class="property">task_id</span>, fs.<span class="title function_">createWriteStream</span>(options.<span class="property">save_path</span>,&#123;<span class="attr">encoding</span>:<span class="string">&quot;binary&quot;</span>&#125;)); <span class="comment">//文件的写入流</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> my_request = http.<span class="title function_">request</span>(&#123;</span><br><span class="line">        <span class="comment">//只获取响应头数据</span></span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;HEAD&#x27;</span>,</span><br><span class="line">        <span class="attr">path</span>: options.<span class="property">path</span>,</span><br><span class="line">        <span class="attr">host</span>: options.<span class="property">host</span></span><br><span class="line">    &#125;, <span class="keyword">function</span> (<span class="params">res</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (res.<span class="property">statusCode</span> == <span class="number">200</span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(file_write_stream);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//编码</span></span><br><span class="line">            <span class="comment">//res.setEncoding(null);</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">//创建progress_stream实例</span></span><br><span class="line">            progress_stream_instance.<span class="title function_">set</span>(options.<span class="property">task_id</span>, <span class="title function_">progress</span>(&#123;</span><br><span class="line">                <span class="attr">length</span>: res.<span class="property">headers</span>[<span class="string">&#x27;content-length&#x27;</span>],</span><br><span class="line">                <span class="attr">time</span>: <span class="number">500</span> <span class="comment">/* ms */</span></span><br><span class="line">            &#125;));</span><br><span class="line"></span><br><span class="line">            <span class="comment">//绑定定期更新进度条事件</span></span><br><span class="line">            progress_stream_instance.<span class="title function_">get</span>(options.<span class="property">task_id</span>).<span class="title function_">on</span>(<span class="string">&#x27;progress&#x27;</span>, <span class="keyword">function</span> (<span class="params">progress</span>) &#123;</span><br><span class="line">                <span class="comment">//更新进度条</span></span><br><span class="line">                percentage.<span class="title function_">set</span>(options.<span class="property">task_id</span>, <span class="title class_">Math</span>.<span class="title function_">round</span>(progress.<span class="property">percentage</span>));</span><br><span class="line">                <span class="comment">/*</span></span><br><span class="line"><span class="comment">                更新UI里的数据</span></span><br><span class="line"><span class="comment">                */</span></span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//正式下载</span></span><br><span class="line">            request.<span class="title function_">get</span>(<span class="string">&quot;http://&quot;</span> + options.<span class="property">host</span> + options.<span class="property">path</span>, options).<span class="title function_">pipe</span>(progress_stream_instance.<span class="title function_">get</span>(options.<span class="property">task_id</span>)).<span class="title function_">pipe</span>(file_write_stream.<span class="title function_">get</span>(options.<span class="property">task_id</span>));</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&#x27;error&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    my_request.<span class="title function_">end</span>();<span class="comment">/*完成请求发送 如果任何一部分请求体没有被发送,它将被刷新到流 */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="三、最终实现效果："><a href="#三、最终实现效果：" class="headerlink" title="三、最终实现效果："></a>三、最终实现效果：</h3><p>（TODO：暂停、断点、UI美化）</p>
+<p><img src="https://pic1.zhimg.com/80/v2-bf79095ef0fde353dc199775d44a1e9c_720w.jpg"></p>
+<p><img src="https://pic1.zhimg.com/80/v2-045d76ef2d150d301a8bffc46c88b07c_720w.jpg"></p>
+<p>成功结果：最终从B站下载来的视频：</p>
+<p><img src="https://pic1.zhimg.com/80/v2-df556c663907c5fd01eb48e330953e10_720w.jpg"></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/462227313">编辑于 2022-02-04 17:39</a></p>
 
                 
             </div>
@@ -498,7 +524,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2022/02/15/bootstrap%E7%BB%84%E4%BB%B6%E5%AF%BC%E8%87%B4%E8%83%8C%E6%99%AF%E5%8F%98%E8%89%B2%E9%97%AE%E9%A2%98/">http://example.com/2022/02/15/bootstrap%E7%BB%84%E4%BB%B6%E5%AF%BC%E8%87%B4%E8%83%8C%E6%99%AF%E5%8F%98%E8%89%B2%E9%97%AE%E9%A2%98/</a>
+                    <a href="http://example.com/2022/02/15/Electron%E5%BA%94%E7%94%A8%E5%86%85%E4%B8%8B%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/">http://example.com/2022/02/15/Electron%E5%BA%94%E7%94%A8%E5%86%85%E4%B8%8B%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -589,13 +615,13 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
             <div class="card">
-                <a href="/2022/02/15/%E5%8F%98%E5%88%86%E6%B3%95%E7%BB%83%E4%B9%A0%E9%A2%98%EF%BC%9A%E6%B1%82%E8%A7%A3%E6%97%8B%E8%BD%AC%E7%8A%B6%E6%80%81%E7%9A%84%E7%BB%B3%E5%AD%90%E6%96%B9%E7%A8%8B/">
+                <a href="/2022/02/15/asar%E6%A8%A1%E5%9D%97%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%E8%AF%86%E5%88%AB%E6%97%A0%E6%95%88bug/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.jpg" class="responsive-img" alt="变分法练习题：求解旋转状态的绳子方程">
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="asar模块的文件名特殊字符识别无效bug">
                         
-                        <span class="card-title">变分法练习题：求解旋转状态的绳子方程</span>
+                        <span class="card-title">asar模块的文件名特殊字符识别无效bug</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -619,8 +645,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E7%89%A9%E7%90%86%E6%8E%A2%E7%A7%98/">
-                        <span class="chip bg-color">物理探秘</span>
+                    <a href="/tags/electron%E5%92%8Cweb%E5%BC%80%E5%8F%91/">
+                        <span class="chip bg-color">electron和web开发</span>
                     </a>
                     
                 </div>
@@ -634,13 +660,13 @@
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/02/15/hello-world/">
+                <a href="/2022/02/15/iFrame%E6%8A%A5%E9%94%99Refused-to-display-URL-in-a-frame-because-it-set-X-Frame-Options-to-SAMEORIGIN/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="Hello World">
+                        <img src="/medias/featureimages/15.jpg" class="responsive-img" alt="iFrame报错Refused to display URL in a frame because it set X-Frame-Options to SAMEORIGIN">
                         
-                        <span class="card-title">Hello World</span>
+                        <span class="card-title">iFrame报错Refused to display URL in a frame because it set X-Frame-Options to SAMEORIGIN</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -660,6 +686,14 @@
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/electron%E5%92%8Cweb%E5%BC%80%E5%8F%91/">
+                        <span class="chip bg-color">electron和web开发</span>
+                    </a>
+                    
                 </div>
                 
             </div>
