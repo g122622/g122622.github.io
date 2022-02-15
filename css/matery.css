@@ -1853,13 +1853,14 @@ footer .copy-right {
 
 #searchModal {
     min-height: 500px;
-    width: 80%;
+    width: 80%;    
+    border-radius: 15px;
 }
 
 #searchModal .search-header .title {
     font-size: 1.6rem;
     color: #333;
-    border-radius: 15px;
+
 
 }
 
