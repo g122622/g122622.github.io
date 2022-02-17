@@ -240,11 +240,11 @@ mark {
 }
 
 .bg-color {
-    background-image: linear-gradient(to right, #bf7730 0%, #9d4f0f 100%);
+    background-image: linear-gradient(to right, #ff8000 0%, #ff7300 100%);
 }
 
 .text-color {
-    color: #bf7730 !important;
+    color: #ff8000 !important;
 }
 
 .white-color {
@@ -256,7 +256,7 @@ mark {
     position: fixed;
     bottom: 0;
     z-index: 300;
-    background: linear-gradient(to right, #bf7730 0%, #9d4f0f 100%);
+    background: linear-gradient(to right, #ff8000 0%, #ff7300 100%);
     opacity: 0.8;
 }
 
@@ -295,7 +295,8 @@ header .brand-logo .logo-img {
 }
 
 header .brand-logo .logo-span {
-    font-size: 1rem;
+    font-size: 1.3rem;
+
 }
 
 /*修改顶部 logo 的文字垂直对齐为 top，避免默认 middle 看起来偏下*/
