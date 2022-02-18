@@ -2,3 +2,9 @@
 .material-tooltip {
     border-radius: 10px;
 }
+
+#headNav{
+    border-radius: 20px;
+    /* top: 10px; */
+    margin: 5px;
+}
