@@ -4,8 +4,10 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hello World, g122622的个人网站">
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex">
+    <meta name="keywords" content="Redis源码阅读摘记, g122622的个人网站">
+    <meta name="description" content="
+总述
+REmote DIctionary Server(Redis) 是一个由 Salvatore Sanfilippo 写的 key-value 存储系统，是跨平台的非关系型数据库。Redis 是一个开源的使用 ANSI C 语言编写、">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="renderer" content="webkit|ie-stand|ie-comp">
@@ -17,7 +19,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Hello World | g122622的个人网站</title>
+    <title>Redis源码阅读摘记 | g122622的个人网站</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.min.css">
@@ -30,7 +32,7 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.1"></head>
+<meta name="generator" content="Hexo 6.0.0"></head>
 
 
 
@@ -309,12 +311,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/13.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title">Redis源码阅读摘记</h1>
                 </div>
             </div>
         </div>
@@ -428,9 +430,13 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">No tag</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/C-C/">
+                                <span class="chip bg-color">C/C++</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
@@ -442,7 +448,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2022-02-16
+                    2022-03-05
                 </div>
                 
 
@@ -460,22 +466,34 @@
         
 
         
+        <!-- 代码块折行 -->
+        <style type="text/css">
+            code[class*="language-"], pre[class*="language-"] { white-space: pre-wrap !important; }
+        </style>
+        
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+                <p><img src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg1.mukewang.com%2F5b140d3e0001e31c05240350.jpg&refer=http%3A%2F%2Fimg1.mukewang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1648992986&t=340866d56b536bb62f461d133c2314fe" alt="输入图片描述"></p>
+<h1 id="总述"><a href="#总述" class="headerlink" title="总述"></a>总述</h1><blockquote>
+<p>REmote DIctionary Server(Redis) 是一个由 Salvatore Sanfilippo 写的 key-value 存储系统，是跨平台的非关系型数据库。<br>Redis 是一个开源的使用 ANSI C 语言编写、遵守 BSD 协议、支持网络、可基于内存、分布式、可选持久性的键值对(Key-Value)存储数据库，并提供多种语言的 API。<br>Redis 通常被称为数据结构服务器，因为值（value）可以是字符串(String)、哈希(Hash)、列表(list)、集合(sets)和有序集合(sorted sets)等类型。<br>–wiki</p>
+</blockquote>
+<p>最近阅读了redis的部分源代码，这里是我初读时的一些笔记和感受。应该会随着时间不断更新。</p>
+<h2 id="1-哈希表的自动扩容"><a href="#1-哈希表的自动扩容" class="headerlink" title="1.哈希表的自动扩容"></a>1.哈希表的自动扩容</h2><p>Redis用变量<code>dict_can_resize</code>记录哈希是否可以自动扩容，由两个方法 <code>dictEnableResize()</code>和<code>dictDisableResize()</code>设置该变量。</p>
+<p><code>dictExpand()</code>进行扩容时，会先选择一个满足size需求的2的指数，然后分配内存空间，创建新的哈希表。</p>
+<p>这与C++ STL中的vector扩容机制类似（不同标准库实现的底数会有所不同，VS2015中以1.5倍扩容，GCC以2倍扩容）。</p>
+<p>k &#x3D; 1.5 在几次扩展之后，可以重用之前的内存空间。详见：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/36538542/answer/67929747">知乎</a></p>
+<h2 id="2-灵活的dictType"><a href="#2-灵活的dictType" class="headerlink" title="2.灵活的dictType"></a>2.灵活的<code>dictType</code></h2><p><code>dictType</code>在哈 希系统中包含了一系列可由应用程序定义的函数指针，包括Hash函数、Key复制、Value 复制、Key比较、Key析构、Value析构，以增加哈希系统的灵活性。其中系统定义了三种默认的type，表示最常用的三种哈希表。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">dictType</span> &#123;</span></span><br><span class="line"> <span class="type">unsigned</span> <span class="title function_">int</span> <span class="params">(*hashFunction)</span><span class="params">(<span class="type">const</span> <span class="type">void</span> *key)</span>; </span><br><span class="line"> <span class="type">void</span> *(*keyDup)(<span class="type">void</span> *privdata, <span class="type">const</span> <span class="type">void</span> *key); </span><br><span class="line"> <span class="type">void</span> *(*valDup)(<span class="type">void</span> *privdata, <span class="type">const</span> <span class="type">void</span> *obj); </span><br><span class="line"> <span class="type">int</span> (*keyCompare)(<span class="type">void</span> *privdata, <span class="type">const</span> <span class="type">void</span> *key1, <span class="type">const</span> <span class="type">void</span> *key2); </span><br><span class="line"> <span class="type">void</span> (*keyDestructor)(<span class="type">void</span> *privdata, <span class="type">void</span> *key); </span><br><span class="line"> <span class="type">void</span> (*valDestructor)(<span class="type">void</span> *privdata, <span class="type">void</span> *obj); </span><br><span class="line">&#125; dictType; </span><br><span class="line"><span class="keyword">extern</span> dictType dictTypeHeapStringCopyKey; </span><br><span class="line"><span class="keyword">extern</span> dictType dictTypeHeapStrings; </span><br><span class="line"><span class="keyword">extern</span> dictType dictTypeHeapStringCopyKeyValue;</span><br></pre></td></tr></table></figure>
+<h2 id="3-宏函数的大量使用"><a href="#3-宏函数的大量使用" class="headerlink" title="3.宏函数的大量使用"></a>3.宏函数的大量使用</h2><p>redis有很多以“__”开头的内部函数和以宏定义形式出现的API函数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> quicklistCompress(_ql, _node)                                          \</span></span><br><span class="line"><span class="meta">    do &#123;                                                                       \</span></span><br><span class="line"><span class="meta">        <span class="keyword">if</span> ((_node)-&gt;recompress)                                               \</span></span><br><span class="line"><span class="meta">            quicklistCompressNode((_node));                                    \</span></span><br><span class="line"><span class="meta">        <span class="keyword">else</span>                                                                   \</span></span><br><span class="line"><span class="meta">            __quicklistCompress((_ql), (_node));                               \</span></span><br><span class="line"><span class="meta">    &#125; while (0)</span></span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>  宏定义中调用的<code>quicklistCompressNode</code>是另一个宏定义：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 对未压缩节点进行压缩操作</span></span><br><span class="line"><span class="comment"> * Compress only uncompressed nodes. </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> quicklistCompressNode(_node)                                           \</span></span><br><span class="line"><span class="meta">    do &#123;                                                                       \</span></span><br><span class="line"><span class="meta">        <span class="keyword">if</span> ((_node) &amp;&amp; (_node)-&gt;encoding == QUICKLIST_NODE_ENCODING_RAW) &#123;     \</span></span><br><span class="line"><span class="meta">            __quicklistCompressNode((_node));                                  \</span></span><br><span class="line"><span class="meta">        &#125;                                                                      \</span></span><br><span class="line"><span class="meta">    &#125; while (0)</span></span><br></pre></td></tr></table></figure>
+<p>  而实际的功能则在 <code>__quicklistCompress((_ql), (_node))</code>和<code>__quicklistCompressNode((_node))</code>中实现。</p>
+<p>  通过#define定义的宏函数通常在预处理时被替换为内联形式，有效避免常规函数调用时的参数copy以及栈操作（出、入）的耗时，牺牲目标编译文件的的部分体积来提高程序的运行效率。</p>
+<h2 id="4-数据换入换出"><a href="#4-数据换入换出" class="headerlink" title="4.数据换入换出"></a>4.数据换入换出</h2><p>Redis在vm中寻找连续空闲区域的算法比较简单，直接进行简单的枚举：如果当前区域空闲，则判断是否有满足需求连续的空闲区域；如果当前区域有数据，则标记遇到有数据的区域的次数，如果连续<code>REDIS_VM_MAX_RANDOM_JUMP/4</code>次遇到非空闲 区域，则将指针往前跳跃一个不超过<code>REDIS_VM_MAX_RANDOM_JUMP</code>的随机数。</p>
+<p><strong>我的问题：为什么不使用<code>快速适配(quick fit)</code>算法？</strong><br>快速适配(quick fit) 算法为那些常用大小的空闲区维护单独的链表。例如有一个 n 项表，该表的第一项是指向大小为 4 KB 的空闲区链表表头指针，第二项是指向大小为 8 KB 的空闲区链表表头指针，第三项是指向大小为 12 KB 的空闲区链表表头指针，以此类推。比如 21 KB 这样的空闲区既可以放在 20 KB 的链表中，也可以放在一个专门存放大小比较特别的空闲区链表中。</p>
 
                 
             </div>
@@ -502,7 +520,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://example.com/2022/02/16/hello-world/">http://example.com/2022/02/16/hello-world/</a>
+                    <a href="http://example.com/2022/03/05/redis/">http://example.com/2022/03/05/redis/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -539,7 +557,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">No tag</span>
+                            
+                                <a href="/tags/C-C/">
+                                    <span class="chip bg-color">C/C++</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -585,17 +607,18 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="far fa-dot-circle"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/2022/02/16/%E5%BC%95%E5%85%A5jquery%E5%90%8E%EF%BC%8C%E4%BB%8D%E5%87%BA%E7%8E%B0-%E6%9C%AA%E5%AE%9A%E4%B9%89%E7%9A%84%E8%A7%A3%E5%86%B3/">
+                <a href="/2022/03/05/redis/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.jpg" class="responsive-img" alt="引入jquery后，仍出现$未定义的解决">
+                        <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="Redis源码阅读摘记">
                         
-                        <span class="card-title">引入jquery后，仍出现$未定义的解决</span>
+                        <span class="card-title">Redis源码阅读摘记</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
@@ -605,9 +628,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-02-16
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-05
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -616,11 +639,12 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/electron%E5%92%8Cweb%E5%BC%80%E5%8F%91/">
-                        <span class="chip bg-color">electron和web开发</span>
+                    <a href="/tags/C-C/">
+                        <span class="chip bg-color">C/C++</span>
                     </a>
                     
                 </div>
@@ -638,7 +662,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="asar模块的文件名特殊字符识别无效bug">
+                        <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="asar模块的文件名特殊字符识别无效bug">
                         
                         <span class="card-title">asar模块的文件名特殊字符识别无效bug</span>
                     </div>
@@ -840,7 +864,7 @@
     
 
     <div class="container row center-align"
-         style="margin-bottom: 0px !important;">
+         style="margin-bottom: 15px !important;">
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
@@ -870,6 +894,60 @@
             <br>
 
             <!-- 运行天数提醒. -->
+            
+                <span id="sitetime"> Loading ...</span>
+                <script>
+                    var calcSiteTime = function () {
+                        var seconds = 1000;
+                        var minutes = seconds * 60;
+                        var hours = minutes * 60;
+                        var days = hours * 24;
+                        var years = days * 365;
+                        var today = new Date();
+                        var startYear = "2019";
+                        var startMonth = "6";
+                        var startDate = "28";
+                        var startHour = "0";
+                        var startMinute = "0";
+                        var startSecond = "0";
+                        var todayYear = today.getFullYear();
+                        var todayMonth = today.getMonth() + 1;
+                        var todayDate = today.getDate();
+                        var todayHour = today.getHours();
+                        var todayMinute = today.getMinutes();
+                        var todaySecond = today.getSeconds();
+                        var t1 = Date.UTC(startYear, startMonth, startDate, startHour, startMinute, startSecond);
+                        var t2 = Date.UTC(todayYear, todayMonth, todayDate, todayHour, todayMinute, todaySecond);
+                        var diff = t2 - t1;
+                        var diffYears = Math.floor(diff / years);
+                        var diffDays = Math.floor((diff / days) - diffYears * 365);
+
+                        // 区分是否有年份.
+                        var language = 'en';
+                        if (startYear === String(todayYear)) {
+                            document.getElementById("year").innerHTML = todayYear;
+                            var daysTip = 'This site has been running for ' + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                daysTip = '本站已运行 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                daysTip = '本站已運行 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = daysTip;
+                        } else {
+                            document.getElementById("year").innerHTML = startYear + " - " + todayYear;
+                            var yearsAndDaysTip = 'This site has been running for ' + diffYears + ' years and '
+                                + diffDays + ' days';
+                            if (language === 'zh-CN') {
+                                yearsAndDaysTip = '本站已运行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            } else if (language === 'zh-HK') {
+                                yearsAndDaysTip = '本站已運行 ' + diffYears + ' 年 ' + diffDays + ' 天';
+                            }
+                            document.getElementById("sitetime").innerHTML = yearsAndDaysTip;
+                        }
+                    }
+
+                    calcSiteTime();
+                </script>
             
             <br>
             

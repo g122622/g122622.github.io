@@ -30,7 +30,7 @@
 
     <script src="/libs/jquery/jquery-3.6.0.min.js"></script>
 
-<meta name="generator" content="Hexo 5.4.1"></head>
+<meta name="generator" content="Hexo 6.0.0"></head>
 
 
 
@@ -391,7 +391,9 @@
 
 
 <script>
-    $('.bg-cover').css('background-image', 'url(/medias/banner/0.jpg)');
+    // 每天切换 banner 图.  Switch banner image every day.
+    var bannerUrl = "/medias/banner/" + new Date().getDay() + '.jpg';
+    $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
 </script>
 
 
@@ -563,30 +565,27 @@
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2022/02/16/%E7%89%A9%E7%90%86%E7%AB%9E%E8%B5%9B%20%E7%AD%94%E7%96%91%202022-1-26/">
+                    <a href="/2022/03/05/redis/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="物理竞赛">
+                            <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="Redis源码阅读摘记">
                             
-                            <span class="card-title">物理竞赛</span>
+                            <span class="card-title">Redis源码阅读摘记</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                1.第一天的一道题
-
-答案里求解时取了一个完整实心柱体来列方程，得到了一个一阶微分方程。
-但是，我以一个薄圆柱壳来列方程，得到的是二阶微分方程。
-我觉得我的过程并没有什么问题，因为《难题集萃》上有道类似题也是像我这样得到的是二阶微分方程。
-
+                                
+总述
+REmote DIctionary Server(Redis) 是一个由 Salvatore Sanfilippo 写的 key-value 存储系统，是跨平台的非关系型数据库。Redis 是一个开源的使用 ANSI C 语言编写、
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-16
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-05
                             </span>
                             <span class="publish-author">
                                 
@@ -600,243 +599,11 @@
                     
                     <div class="card-action article-tags">
                         
-                        <a href="/tags/%E7%89%A9%E7%90%86%E6%8E%A2%E7%A7%98/">
-                            <span class="chip bg-color">物理探秘</span>
+                        <a href="/tags/C-C/">
+                            <span class="chip bg-color">C/C++</span>
                         </a>
                         
                     </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2022/02/16/Bootstrap%E5%AE%9E%E7%8E%B0%E6%8C%89%E9%92%AE%E4%B8%8B%E6%8B%89%E8%8F%9C%E5%8D%95%E6%97%B6%E5%87%BA%E9%94%99/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Bootstrap实现按钮下拉菜单时出错">
-                            
-                            <span class="card-title">Bootstrap实现按钮下拉菜单时出错</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                Bootstrap的dropdown-menu组件提供了下拉菜单的全部功能。
-但需要注意的是，使用它需要在bootstrap.js之前引入popper.js，否则点击按钮时会出现js找不到某个函数的错误。
-12document.write(
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-16
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                g122622
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/electron%E5%92%8Cweb%E5%BC%80%E5%8F%91/">
-                            <span class="chip bg-color">electron和web开发</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2022/02/16/jquery%E9%80%89%E6%8B%A9%E5%99%A8%E6%97%A0%E6%B3%95%E9%80%89%E6%8B%A9id%E4%B8%AD%E5%90%AB%E6%9C%89%E2%80%9C-%E2%80%9D%E7%9A%84%E5%85%83%E7%B4%A0/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="jquery选择器无法选择id中含有“.”的元素">
-                            
-                            <span class="card-title">jquery选择器无法选择id中含有“.”的元素</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                我使用Math.random() * 1e9作为某类元素的唯一id，所以这些元素的id一般长这样：
-12id=&quot;toast196052045.92534143&quot;
-
-jquery选择器将无法正确识别这样的id，我猜测可能因
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-16
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                g122622
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/electron%E5%92%8Cweb%E5%BC%80%E5%8F%91/">
-                            <span class="chip bg-color">electron和web开发</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2022/02/16/js%E6%8F%92%E5%85%A5html%E4%B8%AD%E5%BC%95%E5%8F%B7%E8%AF%86%E5%88%AB%E9%94%99%E4%B9%B1%E7%8E%B0%E8%B1%A1%E8%A7%A3%E5%86%B3/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="js插入html中引号识别错乱现象解决">
-                            
-                            <span class="card-title">js插入html中引号识别错乱现象解决</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                春节将近，为了完成我给小木盒定下的开发目标，我准备采用bootstrap的toast组件来完成pop通知
-
-
-我使用js操作HTML，给通知的关闭按钮动态注入js代码，遇到了奇怪的一幕
-
-
-经过漫长的探索，解决办法如下
-12var oncl
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-16
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                g122622
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/electron%E5%92%8Cweb%E5%BC%80%E5%8F%91/">
-                            <span class="chip bg-color">electron和web开发</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2022/02/16/%E5%BC%95%E5%85%A5jquery%E5%90%8E%EF%BC%8C%E4%BB%8D%E5%87%BA%E7%8E%B0-%E6%9C%AA%E5%AE%9A%E4%B9%89%E7%9A%84%E8%A7%A3%E5%86%B3/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="引入jquery后，仍出现$未定义的解决">
-                            
-                            <span class="card-title">引入jquery后，仍出现$未定义的解决</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                开启我的electronAPP时，devtool出现“$ is not a function”报错。
-解决方案：
-在jquery引用后插入如下代码段
-123&lt;script type=&quot;text/javascript&quot
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-16
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                g122622
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/electron%E5%92%8Cweb%E5%BC%80%E5%8F%91/">
-                            <span class="chip bg-color">electron和web开发</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2022/02/16/hello-world/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="Hello World">
-                            
-                            <span class="card-title">Hello World</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-16
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                g122622
-                                
-                            </span>
-                        </div>
-                    </div>
-
                     
                 </div>
             </div>
@@ -1036,34 +803,178 @@ console信息：
             </div>
               <!-- 隐藏某个文章 -->
             
+             <!-- 隐藏某个文章 -->
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2022/02/15/%E5%8F%98%E5%88%86%E6%B3%95%E7%BB%83%E4%B9%A0%E9%A2%98%EF%BC%9A%E6%B1%82%E8%A7%A3%E6%97%8B%E8%BD%AC%E7%8A%B6%E6%80%81%E7%9A%84%E7%BB%B3%E5%AD%90%E6%96%B9%E7%A8%8B/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="变分法练习题：求解旋转状态的绳子方程">
+                            
+                            <span class="card-title">变分法练习题：求解旋转状态的绳子方程</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                最近看了一点台湾国立交通大学应用数学系林琦焜教授的变分课程（他写的教材应该是相对来说浅显易懂一些的了），想通过一些例题来巩固一下。
+在菜市场里，我们可以看到这样的用来驱赶苍蝇的装置：
+
+                ^图片，侵删^
+
+在不
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-15
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-user fa-fw"></i>
+                                g122622
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/%E7%89%A9%E7%90%86%E6%8E%A2%E7%A7%98/">
+                            <span class="chip bg-color">物理探秘</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+              <!-- 隐藏某个文章 -->
+            
+             <!-- 隐藏某个文章 -->
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2022/02/15/bootstrap%E7%BB%84%E4%BB%B6%E5%AF%BC%E8%87%B4%E8%83%8C%E6%99%AF%E5%8F%98%E8%89%B2%E9%97%AE%E9%A2%98/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="bootstrap组件导致背景变色问题">
+                            
+                            <span class="card-title">bootstrap组件导致背景变色问题</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                我想借助bootstrap的accordion组件实现下图所示的效果但当我实现时却变成了下图的效果发现这个accordion组件会自带一个白背景，干扰颜色布局。就算给accordion的容器增加透明背景属性也无效。
+直到我在devtools
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-15
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-user fa-fw"></i>
+                                g122622
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/electron%E5%92%8Cweb%E5%BC%80%E5%8F%91/">
+                            <span class="chip bg-color">electron和web开发</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+              <!-- 隐藏某个文章 -->
+            
+             <!-- 隐藏某个文章 -->
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2022/02/15/hello-world/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="Hello World">
+                            
+                            <span class="card-title">Hello World</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-15
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-user fa-fw"></i>
+                                g122622
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+              <!-- 隐藏某个文章 -->
+            
+             <!-- 隐藏某个文章 -->
+            <div class="article col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2022/02/14/test-my-site/">
+                        <div class="card-image">
+                            
+                            
+                            <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="test_my_site">
+                            
+                            <span class="card-title">test_my_site</span>
+                        </div>
+                    </a>
+
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-14
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-user fa-fw"></i>
+                                g122622
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+              <!-- 隐藏某个文章 -->
+            
         </div>
     </article>
 
 </main>
-
-
-<div class="container paging">
-    <div class="row">
-        <div class="col s6 m4 l4">
-            
-            <a class="left btn-floating btn-large disabled">
-                <i class="fas fa-angle-left"></i>
-            </a>
-            
-        </div>
-        <div class="page-info col m4 l4 hide-on-small-only">
-            <div class="center-align b-text-gray">1 / 2</div>
-        </div>
-        <div class="col s6 m4 l4">
-            
-            <a href="/page/2/"
-               class="right btn-floating btn-large waves-effect waves-light bg-color">
-                <i class="fas fa-angle-right"></i>
-            </a>
-            
-        </div>
-    </div>
-</div>
 
 
 
