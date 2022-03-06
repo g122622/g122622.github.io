@@ -316,55 +316,9 @@
 </header>
 
     
-<style>
-    .carousel-control {
-        width: 45px;
-        height: 45px;
-        line-height: 55px;
-        border-radius: 45px;
-        background: transparent;
-        cursor: pointer;
-        z-index: 100;
-    }
-
-    #prev-cover {
-        position: absolute;
-        top: 48%;
-        left: 8px;
-    }
-
-    #next-cover {
-        position: absolute;
-        top: 48%;
-        right: 8px;;
-    }
-
-    #prev-cover i {
-        margin-right: 3px;
-    }
-
-    #next-cover i {
-        margin-left: 3px;
-    }
-
-    .carousel-control:hover {
-        background-color: rgba(0, 0, 0, .4);
-    }
-
-    .carousel-control i {
-        color: #fff;
-        font-size: 2.4rem;
-    }
-</style>
-
-
-
-<div class="carousel carousel-slider center index-cover" data-indicators="true" style="margin-top: -64px;">
-    
-
-    <div class="carousel-item  white-text bg-cover about-cover">
-        <div class="container">
-            <div class="row">
+    <div class="bg-cover pd-header about-cover">
+    <div class="container">
+    <div class="row">
     <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
         <div class="brand">
             <div class="title center-align">
@@ -405,163 +359,12 @@
 </script>
 
 
-
-            <div class="cover-btns">
-                <a href="#indexCard" class="waves-effect waves-light btn">
-                    <i class="fa fa-angle-double-down"></i>Start
-                </a>
-
-                
-                    <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light btn" target="_blank">
-                        <i class="fab fa-github-alt"></i>Github
-                    </a>
-                
-            </div>
-            <div class="cover-social-link">
-    <a href="https://github.com/g122622" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
-        <i class="fab fa-github"></i>
-    </a>
-
-
-
-    <a href="mailto:2138553606@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
-        <i class="fas fa-envelope-open"></i>
-    </a>
-
-
-
-
-
-
-
-    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=2138553606" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 2138553606" data-position="top" data-delay="50">
-        <i class="fab fa-qq"></i>
-    </a>
-
-
-
-
-
-    <a href="https://www.zhihu.com/people/122622" class="tooltipped" target="_blank" data-tooltip="关注我的知乎: https://www.zhihu.com/people/122622" data-position="top" data-delay="50">
-        <i class="fab fa-zhihu1">知</i>
-    </a>
-
-
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
-
-</div>
-        </div>
     </div>
-
-    
 </div>
-
-<script>
-    $(function () {
-        let coverSlider = $('.carousel');
-
-        //用户触摸轮播自动 restartPlay 是否生效
-        let initUserPressedOrDraggedActive = false
-
-        //用户触摸轮播自动 restartPlay
-        function initUserPressedOrDragged(instance) {
-            setInterval(() => {
-                if (instance.pressed || instance.dragged) {
-                    // console.log('initUserPressedOrDragged: ',instance.pressed,instance.dragged)
-                    restartPlay()
-                }
-            }, 1000)
-        }
-
-        coverSlider.carousel({
-            duration: Number('120'),
-            fullWidth: true,
-            indicators: 'true' === 'true',
-            onCycleTo() {
-                if (!initUserPressedOrDraggedActive) {
-                    // console.log('initUserPressedOrDraggedActive')
-                    initUserPressedOrDragged(this)
-                    initUserPressedOrDraggedActive = true
-                }
-            },
-        })
-
-        let carouselIntervalId;
-        
-        // Loop to call the next cover article picture.
-        let autoCarousel = function () {
-            carouselIntervalId = setInterval(function () {
-                coverSlider.carousel('next');
-            }, 5000);
-        };
-        autoCarousel();
-        
-
-        function restartPlay() {
-            
-            clearInterval(carouselIntervalId);
-            autoCarousel();
-            
-        };
-
-        
-        // prev and next cover post.
-        $('#prev-cover').click(function () {
-            coverSlider.carousel('prev');
-            restartPlay();
-        });
-        $('#next-cover').click(function () {
-            coverSlider.carousel('next');
-            restartPlay();
-        });
-        
-    });
-</script>
-
 
 
 <main class="content">
 
-    
-    <div id="indexCard" class="index-card">
-        <div class="container ">
-            <div class="card">
-                <div class="card-content">
-                    
-                        <div class="dream">
-    
-    <div class="title center-align">
-        <i class="far fa-lightbulb"></i>&nbsp;&nbsp;简介
-    </div>
-    
-    <div class="row">
-        <div class="col l8 offset-l2 m10 offset-m1 s10 offset-s1 center-align text">
-            这是我的个人网站，内容尽量与知乎同步，还会有一些上面没有的奇奇怪怪的内容。提供资源下载，以及域名解析。
-        </div>
-    </div>
-</div>
-
-                    
-
-                    
-
-                    
-
-                    
-                    <div id="recommend-sections" class="recommend">
-                        
-
-
-
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-    </div>
     
 
     
@@ -573,77 +376,30 @@
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2022/03/05/redis/">
+                    <a href="/2022/02/15/%E5%8F%98%E5%88%86%E6%B3%95%E7%BB%83%E4%B9%A0%E9%A2%98%EF%BC%9A%E6%B1%82%E8%A7%A3%E6%97%8B%E8%BD%AC%E7%8A%B6%E6%80%81%E7%9A%84%E7%BB%B3%E5%AD%90%E6%96%B9%E7%A8%8B/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="Redis源码阅读摘记">
+                            <img src="/medias/featureimages/6.jpg" class="responsive-img" alt="变分法练习题：求解旋转状态的绳子方程">
                             
-                            <span class="card-title">Redis源码阅读摘记</span>
+                            <span class="card-title">变分法练习题：求解旋转状态的绳子方程</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                
-总述
-REmote DIctionary Server(Redis) 是一个由 Salvatore Sanfilippo 写的 key-value 存储系统，是跨平台的非关系型数据库。Redis 是一个开源的使用 ANSI C 语言编写、
+                                最近看了一点台湾国立交通大学应用数学系林琦焜教授的变分课程（他写的教材应该是相对来说浅显易懂一些的了），想通过一些例题来巩固一下。
+在菜市场里，我们可以看到这样的用来驱赶苍蝇的装置：
+
+                ^图片，侵删^
+
+在不
                             
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-03-05
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                g122622
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/C-C/">
-                            <span class="chip bg-color">C/C++</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2022/02/16/%E7%89%A9%E7%90%86%E7%AB%9E%E8%B5%9B%20%E7%AD%94%E7%96%91%202022-1-26/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="物理竞赛">
-                            
-                            <span class="card-title">物理竞赛</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                1.第一天的一道题
-
-答案里求解时取了一个完整实心柱体来列方程，得到了一个一阶微分方程。
-但是，我以一个薄圆柱壳来列方程，得到的是二阶微分方程。
-我觉得我的过程并没有什么问题，因为《难题集萃》上有道类似题也是像我这样得到的是二阶微分方程。
-
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-16
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-15
                             </span>
                             <span class="publish-author">
                                 
@@ -670,220 +426,21 @@ REmote DIctionary Server(Redis) 是一个由 Salvatore Sanfilippo 写的 key-val
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2022/02/16/Bootstrap%E5%AE%9E%E7%8E%B0%E6%8C%89%E9%92%AE%E4%B8%8B%E6%8B%89%E8%8F%9C%E5%8D%95%E6%97%B6%E5%87%BA%E9%94%99/">
+                    <a href="/2022/02/15/bootstrap%E7%BB%84%E4%BB%B6%E5%AF%BC%E8%87%B4%E8%83%8C%E6%99%AF%E5%8F%98%E8%89%B2%E9%97%AE%E9%A2%98/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/10.jpg" class="responsive-img" alt="Bootstrap实现按钮下拉菜单时出错">
+                            <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="bootstrap组件导致背景变色问题">
                             
-                            <span class="card-title">Bootstrap实现按钮下拉菜单时出错</span>
+                            <span class="card-title">bootstrap组件导致背景变色问题</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                Bootstrap的dropdown-menu组件提供了下拉菜单的全部功能。
-但需要注意的是，使用它需要在bootstrap.js之前引入popper.js，否则点击按钮时会出现js找不到某个函数的错误。
-12document.write(
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-16
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                g122622
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/electron%E5%92%8Cweb%E5%BC%80%E5%8F%91/">
-                            <span class="chip bg-color">electron和web开发</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2022/02/16/jquery%E9%80%89%E6%8B%A9%E5%99%A8%E6%97%A0%E6%B3%95%E9%80%89%E6%8B%A9id%E4%B8%AD%E5%90%AB%E6%9C%89%E2%80%9C-%E2%80%9D%E7%9A%84%E5%85%83%E7%B4%A0/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="jquery选择器无法选择id中含有“.”的元素">
-                            
-                            <span class="card-title">jquery选择器无法选择id中含有“.”的元素</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                我使用Math.random() * 1e9作为某类元素的唯一id，所以这些元素的id一般长这样：
-12id=&quot;toast196052045.92534143&quot;
-
-jquery选择器将无法正确识别这样的id，我猜测可能因
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-16
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                g122622
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/electron%E5%92%8Cweb%E5%BC%80%E5%8F%91/">
-                            <span class="chip bg-color">electron和web开发</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2022/02/16/js%E6%8F%92%E5%85%A5html%E4%B8%AD%E5%BC%95%E5%8F%B7%E8%AF%86%E5%88%AB%E9%94%99%E4%B9%B1%E7%8E%B0%E8%B1%A1%E8%A7%A3%E5%86%B3/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/4.jpg" class="responsive-img" alt="js插入html中引号识别错乱现象解决">
-                            
-                            <span class="card-title">js插入html中引号识别错乱现象解决</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                春节将近，为了完成我给小木盒定下的开发目标，我准备采用bootstrap的toast组件来完成pop通知
-
-
-我使用js操作HTML，给通知的关闭按钮动态注入js代码，遇到了奇怪的一幕
-
-
-经过漫长的探索，解决办法如下
-12var oncl
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-16
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                g122622
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/electron%E5%92%8Cweb%E5%BC%80%E5%8F%91/">
-                            <span class="chip bg-color">electron和web开发</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2022/02/16/%E5%BC%95%E5%85%A5jquery%E5%90%8E%EF%BC%8C%E4%BB%8D%E5%87%BA%E7%8E%B0-%E6%9C%AA%E5%AE%9A%E4%B9%89%E7%9A%84%E8%A7%A3%E5%86%B3/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="引入jquery后，仍出现$未定义的解决">
-                            
-                            <span class="card-title">引入jquery后，仍出现$未定义的解决</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                开启我的electronAPP时，devtool出现“$ is not a function”报错。
-解决方案：
-在jquery引用后插入如下代码段
-123&lt;script type=&quot;text/javascript&quot
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-16
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                g122622
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/electron%E5%92%8Cweb%E5%BC%80%E5%8F%91/">
-                            <span class="chip bg-color">electron和web开发</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2022/02/15/asar%E6%A8%A1%E5%9D%97%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%E8%AF%86%E5%88%AB%E6%97%A0%E6%95%88bug/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/14.jpg" class="responsive-img" alt="asar模块的文件名特殊字符识别无效bug">
-                            
-                            <span class="card-title">asar模块的文件名特殊字符识别无效bug</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                某天，我在npm上安装了asar模块。
-今天下午竞赛课摸鱼，无聊拿它来对一个使用electron开发的教学软件（就是那个洋葱数学）进行asar解包操作。
-控制台输入如下：
-12$ asar extract [src] [dst]
-
-其中，d
+                                我想借助bootstrap的accordion组件实现下图所示的效果但当我实现时却变成了下图的效果发现这个accordion组件会自带一个白背景，干扰颜色布局。就算给accordion的容器增加透明背景属性也无效。
+直到我在devtools
                             
                         </div>
                         <div class="publish-info">
@@ -915,24 +472,20 @@ jquery选择器将无法正确识别这样的id，我猜测可能因
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2022/02/15/Electron%E5%BA%94%E7%94%A8%E5%86%85%E4%B8%8B%E8%BD%BD%E5%99%A8%E5%AE%9E%E7%8E%B0/">
+                    <a href="/2022/02/15/hello-world/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/8.jpg" class="responsive-img" alt="Electron应用内下载器实现">
+                            <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="Hello World">
                             
-                            <span class="card-title">Electron应用内下载器实现</span>
+                            <span class="card-title">Hello World</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                考虑到某些模块的正常运行离不开伪造http请求标头来欺骗服务器，以获取上面的某些敏感数据。
-准备做一个应用内的定制版下载管理器，来承接各个模块可能需要触发的下载任务。
-整个分支工程的框架大体如下：
-
-一、外置下载引擎的可行性论证与选择优秀的
+                                Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hex
                             
                         </div>
                         <div class="publish-info">
@@ -948,14 +501,6 @@ jquery选择器将无法正确识别这样的id，我猜测可能因
                         </div>
                     </div>
 
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/electron%E5%92%8Cweb%E5%BC%80%E5%8F%91/">
-                            <span class="chip bg-color">electron和web开发</span>
-                        </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -964,28 +509,23 @@ jquery选择器将无法正确识别这样的id，我猜测可能因
              <!-- 隐藏某个文章 -->
             <div class="article col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">
-                    <a href="/2022/02/15/iFrame%E6%8A%A5%E9%94%99Refused-to-display-URL-in-a-frame-because-it-set-X-Frame-Options-to-SAMEORIGIN/">
+                    <a href="/2022/02/14/test-my-site/">
                         <div class="card-image">
                             
                             
-                            <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="iFrame报错Refused to display URL in a frame because it set X-Frame-Options to SAMEORIGIN">
+                            <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="test_my_site">
                             
-                            <span class="card-title">iFrame报错Refused to display URL in a frame because it set X-Frame-Options to SAMEORIGIN</span>
+                            <span class="card-title">test_my_site</span>
                         </div>
                     </a>
 
                     <div class="card-content article-content">
                         <div class="summary block-with-text">
                             
-                                如果服务端不允许页面iframe嵌套，本地chromium会拦截iframe的load请求来阻止访问。
-
-结合经验，我想到了如下解决方法来强行绕过这个检测：
-我在初次研究ajax的时候发现了如果把xmlhttp指向任意一个非下载资源页面时，
-                            
                         </div>
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-15
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-14
                             </span>
                             <span class="publish-author">
                                 
@@ -996,61 +536,6 @@ jquery选择器将无法正确识别这样的id，我猜测可能因
                         </div>
                     </div>
 
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/electron%E5%92%8Cweb%E5%BC%80%E5%8F%91/">
-                            <span class="chip bg-color">electron和web开发</span>
-                        </a>
-                        
-                    </div>
-                    
-                </div>
-            </div>
-              <!-- 隐藏某个文章 -->
-            
-             <!-- 隐藏某个文章 -->
-            <div class="article col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2022/02/15/electron-v14-%E5%BC%95%E5%85%A5remote%E6%88%90%E5%8A%9F%E4%BD%86%E4%BD%BF%E7%94%A8%E6%97%B6%E6%96%B9%E6%B3%95%E6%9C%AA%E5%AE%9A%E4%B9%89%E7%9A%84%E8%A7%A3%E5%86%B3/">
-                        <div class="card-image">
-                            
-                            
-                            <img src="/medias/featureimages/16.jpg" class="responsive-img" alt="electron v14+引入remote成功但使用时方法未定义的解决">
-                            
-                            <span class="card-title">electron v14+引入remote成功但使用时方法未定义的解决</span>
-                        </div>
-                    </a>
-
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-                            
-                                寒假回校后，我把开发环境从家里电脑的win10切换到了学校的win7，不知道什么原因，本来可以正常运行的remote模块突然出现异常。
-console信息：
-1234renderer.js:443 Uncaught TypeError: r
-                            
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-02-15
-                            </span>
-                            <span class="publish-author">
-                                
-                                <i class="fas fa-user fa-fw"></i>
-                                g122622
-                                
-                            </span>
-                        </div>
-                    </div>
-
-                    
-                    <div class="card-action article-tags">
-                        
-                        <a href="/tags/electron%E5%92%8Cweb%E5%BC%80%E5%8F%91/">
-                            <span class="chip bg-color">electron和web开发</span>
-                        </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -1066,18 +551,18 @@ console信息：
     <div class="row">
         <div class="col s6 m4 l4">
             
-            <a class="left btn-floating btn-large disabled">
+            <a href="/"
+               class="left btn-floating btn-large waves-effect waves-light bg-color">
                 <i class="fas fa-angle-left"></i>
             </a>
             
         </div>
         <div class="page-info col m4 l4 hide-on-small-only">
-            <div class="center-align b-text-gray">1 / 2</div>
+            <div class="center-align b-text-gray">2 / 2</div>
         </div>
         <div class="col s6 m4 l4">
             
-            <a href="/page/2/"
-               class="right btn-floating btn-large waves-effect waves-light bg-color">
+            <a class="right btn-floating btn-large disabled">
                 <i class="fas fa-angle-right"></i>
             </a>
             
